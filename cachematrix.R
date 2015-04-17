@@ -1,5 +1,6 @@
-# This code is meant to use two functions to cache the inverse of a matrix
-# so that we don't need to compute it over and over again.
+# This code is meant to use two functions to calculate and cache the
+# inverse of a matrix so that we don't need to compute it over and over
+# again.
 
 # The function makeCacheMatrix is a list containing a function to:
 # 1. set the value of a matrix
@@ -8,14 +9,14 @@
 # 4. get the inverse of the matrix
 
 makeCacheMatrix <- function(x = matrix()) {
-  m <- NULL
+  inv <- NULL
   set <- function(y) {
     x <<- y
-    m <<- NULL
+    inv <<- NULL
   }
   get <- function() x
-  setinv <- function(inv) m <<- inv
-  getinv <- function() m
+  setinv <- function(inverse) inv <<- inverse
+  getinv <- function() inv
   list(set = set, get = get,
        setinv = setinv,
        getinv = getinv)
@@ -28,13 +29,13 @@ makeCacheMatrix <- function(x = matrix()) {
 # the value of the inverse in the cache via the setinv function.
 
 cacheSolve <- function(x, ...) {
-  m <- x$getinv()
-  if(!is.null(m)) {
+  inv <- x$getinv()
+  if(!is.null(inv)) {
     message("getting cached data")
-    return(m)
+    return(inv)
   }
   data <- x$get()
-  m <- solve(data, ...)
-  x$setinv(m)
-  m
+  inv <- solve(data, ...)
+  x$setinv(inv)
+  inv
 }
